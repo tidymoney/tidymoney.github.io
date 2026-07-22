@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Debt Snowball Calculator — Snowball vs. Avalanche Payoff Comparison | TidyMoney</title>
+<meta name="description" content="Free debt snowball calculator. Enter your debts and see your debt-free date, total interest, and exactly how much the avalanche method saves vs. the snowball — instantly, no signup.">
+<meta property="og:title" content="Free Debt Snowball vs. Avalanche Calculator">
+<meta property="og:description" content="See your debt-free date and how much interest each payoff strategy costs — free, instant, no signup.">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What is the debt snowball method?","acceptedAnswer":{"@type":"Answer","text":"With the debt snowball, you pay minimums on every debt and put all extra money toward the smallest balance first. When it's gone, its payment rolls into the next smallest. It builds momentum with quick wins."}},
+{"@type":"Question","name":"What is the debt avalanche method?","acceptedAnswer":{"@type":"Answer","text":"With the debt avalanche, extra money goes toward the highest interest rate first. It is mathematically the cheapest strategy — this calculator shows exactly how much it saves for your numbers."}},
+{"@type":"Question","name":"Which is better, snowball or avalanche?","acceptedAnswer":{"@type":"Answer","text":"Avalanche saves the most interest; snowball gives faster early wins that keep people motivated. Enter your debts above to see the real dollar difference — for many people it's small enough that motivation wins."}}]}
+</script>
+<style>
+:root{--dark:#3D5A45;--sage:#7A9E7E;--light:#E7EFE7;--cream:#FAF7F0;--ink:#2F3E33;--gold:#C9A227;--red:#C0392B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--ink);line-height:1.5}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+header{background:var(--dark);color:#fff;padding:28px 16px;text-align:center}
+header .brand{color:#fff;font-weight:bold;letter-spacing:.5px}
+header .brand span{color:var(--gold)}
+h1{font-size:1.7rem;margin-top:10px}
+header p{color:#cbd8c7;margin-top:8px;max-width:640px;margin-left:auto;margin-right:auto}
+.gold-bar{height:6px;background:var(--gold)}
+.card{background:#fff;border:1px solid #d5ddd5;border-radius:12px;padding:18px;margin:18px 0;box-shadow:0 4px 14px rgba(40,55,45,.08)}
+h2{color:var(--dark);font-size:1.15rem;margin-bottom:10px}
+table{width:100%;border-collapse:collapse}
+th{background:var(--dark);color:#fff;padding:8px;font-size:.8rem;text-align:left}
+td{padding:6px;border-bottom:1px solid #e4eae4}
+input,select{width:100%;padding:8px;border:1px solid #c8d2c8;border-radius:6px;background:#FFF9E3;color:#1F4E9C;font-size:.95rem}
+input:focus{outline:2px solid var(--sage)}
+.row-extra{display:flex;gap:12px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.row-extra label{font-weight:bold}
+.row-extra input{max-width:160px}
+button{cursor:pointer;border:none;border-radius:8px;padding:10px 18px;font-size:1rem;font-weight:bold}
+.btn-add{background:var(--light);color:var(--dark)}
+.btn-calc{background:var(--dark);color:#fff;padding:12px 28px;font-size:1.1rem}
+.btn-calc:hover{background:#2f4736}
+.results{display:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.strat{border:2px solid var(--light);border-radius:12px;padding:14px}
+.strat h3{color:var(--dark)}
+.strat .big{font-size:1.9rem;font-weight:bold;color:var(--dark);margin:6px 0}
+.strat .sub{color:#6c766c;font-size:.9rem}
+.savings{background:var(--light);border-radius:12px;padding:14px;text-align:center;margin-top:14px}
+.savings b{color:var(--gold);font-size:1.4rem}
+canvas{width:100%;max-width:100%;margin-top:10px}
+.cta{background:var(--dark);color:#fff;border-radius:12px;padding:22px;text-align:center;margin:26px 0}
+.cta a{display:inline-block;background:var(--gold);color:#243b2c;font-weight:bold;padding:12px 22px;border-radius:8px;text-decoration:none;margin:10px 6px 0}
+.cta a.alt{background:#fff}
+.faq h3{color:var(--dark);margin:14px 0 4px}
+footer{color:#8a8f8b;text-align:center;font-size:.85rem;padding:24px 12px}
+.del{background:none;color:var(--red);font-size:1.1rem;padding:2px 8px}
+.err{color:var(--red);font-weight:bold;display:none;margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Tidy<span>Money</span></div>
+  <h1>Free Debt Snowball vs. Avalanche Calculator</h1>
+  <p>Enter your debts, add whatever extra you can pay each month, and see your debt-free date, total interest, and which strategy actually wins for your numbers. Free, instant, nothing to sign up for.</p>
+</header>
+<div class="gold-bar"></div>
+<div class="wrap">
+  <div class="card">
+    <h2>1 · Your debts</h2>
+    <table id="tbl">
+      <thead><tr><th>Debt name</th><th>Balance ($)</th><th>APR (%)</th><th>Min payment ($)</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div style="margin-top:10px"><button class="btn-add" onclick="addRow()">+ Add another debt</button></div>
+    <div class="row-extra">
+      <label for="extra">2 · Extra you can pay monthly:</label>
+      <input id="extra" type="number" value="200" min="0" step="10">
+      <button class="btn-calc" onclick="calc()">Show my debt-free date →</button>
+    </div>
+    <div class="err" id="err">Please enter at least one debt with a balance, APR, and minimum payment.</div>
+  </div>
+
+  <div class="card results" id="results">
+    <h2>3 · The verdict</h2>
+    <div class="grid">
+      <div class="strat"><h3>❄️ Snowball <span style="font-weight:normal;font-size:.8rem">(smallest balance first)</span></h3>
+        <div class="big" id="sMonths"></div><div class="sub" id="sDate"></div><div class="sub" id="sInt"></div><div class="sub" id="sFirst"></div></div>
+      <div class="strat"><h3>⛰️ Avalanche <span style="font-weight:normal;font-size:.8rem">(highest APR first)</span></h3>
+        <div class="big" id="aMonths"></div><div class="sub" id="aDate"></div><div class="sub" id="aInt"></div><div class="sub" id="aFirst"></div></div>
+    </div>
+    <div class="savings" id="verdict"></div>
+    <canvas id="chart" height="220"></canvas>
+  </div>
+
+  <div class="cta">
+    <h2 style="color:#fff">Want the plan on paper — and your whole budget on autopilot?</h2>
+    <p style="color:#cbd8c7;max-width:560px;margin:8px auto 0">This calculator is a taste of our spreadsheets: the full Debt Payoff Calculator gives you a printable month-by-month payment plan, and the Ultimate Budget by Paycheck runs your entire budget with a live dashboard.</p>
+    <a href="https://ackley57.gumroad.com/l/debt-payoff-calculator" rel="noopener">Get the Debt Payoff Spreadsheet — $5</a>
+    <a class="alt" href="https://www.etsy.com/shop/TidyMoney" rel="noopener">Visit the TidyMoney shop on Etsy</a>
+  </div>
+
+  <div class="card faq">
+    <h2>Snowball vs. avalanche, in plain English</h2>
+    <h3>What is the debt snowball method?</h3>
+    <p>Pay minimums on everything; throw every spare dollar at the <b>smallest balance</b>. When it dies, its whole payment rolls into the next smallest. You get wins fast, and wins keep you going.</p>
+    <h3>What is the debt avalanche method?</h3>
+    <p>Same idea, but extra money attacks the <b>highest interest rate</b> first. It's mathematically the cheapest path out of debt.</p>
+    <h3>Which should I pick?</h3>
+    <p>Run your numbers above. If avalanche only saves you a little, most people do better with the snowball's motivation. If it saves you a lot, the math is telling you something. Either way — the strategy you stick with beats the one you abandon.</p>
+    <p style="margin-top:10px;font-size:.85rem;color:#8a8f8b">Assumes payments start next month and interest compounds monthly (APR ÷ 12). Educational tool, not financial advice.</p>
+  </div>
+</div>
+<footer>© TidyMoney · Spreadsheets that run your money for you · <a href="https://www.etsy.com/shop/TidyMoney" style="color:#7A9E7E">Etsy</a> · <a href="https://ackley57.gumroad.com" style="color:#7A9E7E">Gumroad</a></footer>
+<script>
+function addRow(n,b,r,m){
+  const tb=document.getElementById('rows');
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><input placeholder="Visa card" value="${n||''}"></td>
+  <td><input type="number" min="0" placeholder="4200" value="${b||''}"></td>
+  <td><input type="number" min="0" step="0.1" placeholder="26.99" value="${r||''}"></td>
+  <td><input type="number" min="0" placeholder="126" value="${m||''}"></td>
+  <td><button class="del" onclick="this.closest('tr').remove()">✕</button></td>`;
+  tb.appendChild(tr);
+}
+addRow('Credit card','','','');addRow();addRow();
+function getDebts(){
+  return [...document.querySelectorAll('#rows tr')].map(tr=>{
+    const i=tr.querySelectorAll('input');
+    return {n:i[0].value||'Debt',b:parseFloat(i[1].value),r:parseFloat(i[2].value),m:parseFloat(i[3].value)};
+  }).filter(d=>d.b>0&&d.r>=0&&d.m>0);
+}
+function sim(debts,extra,mode){
+  const ds=debts.map(d=>({...d})).sort((a,b)=>mode==='s'?a.b-b.b:b.r-a.r);
+  const pool=ds.reduce((s,d)=>s+d.m,0)+extra;
+  let months=0,ti=0,first=null;const curve=[ds.reduce((s,d)=>s+d.b,0)];
+  while(ds.some(d=>d.b>0.005)&&months<600){
+    months++;
+    const smu=ds.filter(d=>d.b>0.005).reduce((s,d)=>s+d.m,0);
+    let ex=Math.max(0,pool-smu),tgt=true;
+    for(const d of ds){
+      if(d.b<=0.005)continue;
+      const i=Math.round(d.b*d.r/1200*100)/100;ti+=i;
+      const pay=Math.min(d.b+i,d.m+(tgt?ex:0));tgt=false;
+      d.b=Math.max(0,Math.round((d.b+i-pay)*100)/100);
+    }
+    if(first===null&&ds[0].b<=0.005)first=months;
+    curve.push(ds.reduce((s,d)=>s+d.b,0));
+  }
+  return {months,ti:Math.round(ti*100)/100,first,curve};
+}
+function fmt$(x){return '$'+x.toLocaleString(undefined,{maximumFractionDigits:0})}
+function dateIn(m){const d=new Date();d.setMonth(d.getMonth()+m);return d.toLocaleDateString(undefined,{month:'long',year:'numeric'})}
+function calc(){
+  const debts=getDebts(),extra=parseFloat(document.getElementById('extra').value)||0;
+  const err=document.getElementById('err');
+  if(!debts.length){err.style.display='block';return}
+  err.style.display='none';
+  const s=sim(debts,extra,'s'),a=sim(debts,extra,'a');
+  document.getElementById('results').style.display='block';
+  sMonths.textContent=s.months>=600?'—':s.months+' months';
+  aMonths.textContent=a.months>=600?'—':a.months+' months';
+  sDate.textContent='Debt-free '+dateIn(s.months); aDate.textContent='Debt-free '+dateIn(a.months);
+  sInt.textContent='Total interest: '+fmt$(s.ti); aInt.textContent='Total interest: '+fmt$(a.ti);
+  sFirst.textContent=s.first?('First debt gone in '+s.first+' months 🎉'):''; aFirst.textContent=a.first?('First debt gone in '+a.first+' months'):'';
+  const sv=Math.round((s.ti-a.ti)*100)/100;
+  verdict.innerHTML = sv>1 ? `Avalanche saves you <b>${fmt$(sv)}</b> in interest${a.months<s.months?(' and '+(s.months-a.months)+' month'+(s.months-a.months>1?'s':'')):''} — but snowball kills your first debt ${s.first&&a.first&&s.first<a.first?'sooner':'just as fast'}. Pick what keeps you going.` : `The strategies are nearly identical for your numbers (${fmt$(Math.abs(sv))} apart) — take the snowball's quick wins.`;
+  drawChart(s.curve,a.curve);
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+function drawChart(s,a){
+  const c=document.getElementById('chart'),ctx=c.getContext('2d');
+  c.width=c.offsetWidth*2;c.height=440;
+  ctx.clearRect(0,0,c.width,c.height);
+  const n=Math.max(s.length,a.length),max=Math.max(s[0],a[0]);
+  const X=i=>40+(c.width-60)*i/(n-1),Y=v=>20+(c.height-60)*(1-v/max);
+  ctx.strokeStyle='#d5ddd5';ctx.beginPath();ctx.moveTo(40,Y(0));ctx.lineTo(c.width-20,Y(0));ctx.stroke();
+  const line=(arr,col)=>{ctx.strokeStyle=col;ctx.lineWidth=5;ctx.beginPath();arr.forEach((v,i)=>i?ctx.lineTo(X(i),Y(v)):ctx.moveTo(X(i),Y(v)));ctx.stroke()};
+  line(s,'#7A9E7E');line(a,'#C9A227');
+  ctx.font='24px Arial';ctx.fillStyle='#7A9E7E';ctx.fillText('— Snowball',60,40);
+  ctx.fillStyle='#C9A227';ctx.fillText('— Avalanche',220,40);
+}
+</script>
+</body>
+</html>
+
