@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tidymoney.github.io/sitemap.xml
+
