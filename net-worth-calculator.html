@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Net Worth Calculator — Assets Minus Debts in 2 Minutes | TidyMoney</title>
+<meta name="description" content="Free net worth calculator. List what you own and what you owe — get your net worth, an assets vs. debts breakdown, and what to track next. No signup, nothing stored.">
+<meta property="og:title" content="Free Net Worth Calculator — know your number">
+<meta property="og:description" content="Assets minus debts, calculated in 2 minutes. Free, private, nothing stored.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://tidymoney.github.io/net-worth-calculator.html">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How do I calculate my net worth?","acceptedAnswer":{"@type":"Answer","text":"Add up everything you own (cash, savings, investments, retirement accounts, your home's value, vehicles) and subtract everything you owe (credit cards, student loans, auto loans, mortgage). Assets minus liabilities equals net worth."}},
+{"@type":"Question","name":"Is a negative net worth bad?","acceptedAnswer":{"@type":"Answer","text":"It's common early on — student loans and a car loan can outweigh savings for years. The number matters less than its direction: track it monthly and watch it climb as debts shrink and savings grow."}},
+{"@type":"Question","name":"How often should I track my net worth?","acceptedAnswer":{"@type":"Answer","text":"Monthly is the sweet spot — frequent enough to stay motivated, rare enough that market noise doesn't rattle you. Five minutes on payday is all it takes."}}]}
+</script>
+<style>
+:root{--dark:#3D5A45;--sage:#7A9E7E;--light:#E7EFE7;--cream:#FAF7F0;--ink:#2F3E33;--gold:#C9A227;--red:#C0392B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--ink);line-height:1.5}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+header{background:var(--dark);color:#fff;padding:28px 16px;text-align:center}
+header .brand{color:#fff;font-weight:bold;letter-spacing:.5px}
+header .brand span{color:var(--gold)}
+h1{font-size:1.7rem;margin-top:10px}
+header p{color:#cbd8c7;margin-top:8px;max-width:640px;margin-left:auto;margin-right:auto}
+.gold-bar{height:6px;background:var(--gold)}
+nav.tools{background:#2f4736;text-align:center;padding:9px 6px;font-size:.9rem}
+nav.tools a{color:#E7EFE7;text-decoration:none;margin:0 10px}
+nav.tools a.here{color:var(--gold);font-weight:bold}
+.card{background:#fff;border:1px solid #d5ddd5;border-radius:12px;padding:18px;margin:18px 0;box-shadow:0 4px 14px rgba(40,55,45,.08)}
+h2{color:var(--dark);font-size:1.15rem;margin-bottom:10px}
+table{width:100%;border-collapse:collapse}
+th{background:var(--dark);color:#fff;padding:8px;font-size:.8rem;text-align:left}
+td{padding:6px;border-bottom:1px solid #e4eae4}
+input{width:100%;padding:8px;border:1px solid #c8d2c8;border-radius:6px;background:#FFF9E3;color:#1F4E9C;font-size:.95rem}
+input:focus{outline:2px solid var(--sage)}
+button{cursor:pointer;border:none;border-radius:8px;padding:10px 18px;font-size:1rem;font-weight:bold}
+.btn-add{background:var(--light);color:var(--dark);margin-top:10px}
+.btn-calc{background:var(--dark);color:#fff;padding:12px 28px;font-size:1.1rem;margin-top:14px}
+.btn-calc:hover{background:#2f4736}
+.del{background:none;color:var(--red);font-size:1.1rem;padding:2px 8px}
+.results{display:none}
+.nw{background:var(--dark);color:#fff;border-radius:12px;padding:18px;text-align:center}
+.nw .big{font-size:2.4rem;font-weight:bold;color:var(--gold);margin:4px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.tile{border:2px solid var(--light);border-radius:12px;padding:14px;text-align:center}
+.tile .big{font-size:1.6rem;font-weight:bold;margin:4px 0}
+.tile .lab{color:#6c766c;font-size:.85rem;text-transform:uppercase;letter-spacing:.5px}
+.bar{height:34px;border-radius:8px;overflow:hidden;display:flex;margin-top:14px;background:var(--light)}
+.bar .a{background:var(--sage);height:100%}
+.bar .d{background:var(--gold);height:100%}
+.legend{font-size:.85rem;color:#6c766c;margin-top:6px;text-align:center}
+.cta{background:var(--dark);color:#fff;border-radius:12px;padding:22px;text-align:center;margin:26px 0}
+.cta a{display:inline-block;background:var(--gold);color:#243b2c;font-weight:bold;padding:12px 22px;border-radius:8px;text-decoration:none;margin:10px 6px 0}
+.cta a.alt{background:#fff}
+.faq h3{color:var(--dark);margin:14px 0 4px}
+footer{color:#8a8f8b;text-align:center;font-size:.85rem;padding:24px 12px}
+.privacy{font-size:.85rem;color:#8a8f8b;margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Tidy<span>Money</span></div>
+  <h1>Free Net Worth Calculator</h1>
+  <p>What you own minus what you owe — the one number that summarizes your whole financial picture. Two minutes, nothing stored, nothing to sign up for.</p>
+</header>
+<div class="gold-bar"></div>
+<nav class="tools">Free tools: <a href="/">Debt Payoff</a> <a href="/savings-goal-calculator.html">Savings Goal</a> <a class="here" href="/net-worth-calculator.html">Net Worth</a> · Shop: <a href="https://www.etsy.com/shop/TidyMoney" rel="noopener">Etsy</a> <a href="https://ackley57.gumroad.com" rel="noopener">Gumroad</a></nav>
+<div class="wrap">
+  <div class="card">
+    <h2>1 · What you own (assets)</h2>
+    <table><thead><tr><th>Asset</th><th style="width:180px">Value ($)</th><th style="width:40px"></th></tr></thead><tbody id="assets"></tbody></table>
+    <button class="btn-add" onclick="addRow('assets')">+ Add asset</button>
+    <h2 style="margin-top:18px">2 · What you owe (debts)</h2>
+    <table><thead><tr><th>Debt</th><th style="width:180px">Balance ($)</th><th style="width:40px"></th></tr></thead><tbody id="debts"></tbody></table>
+    <button class="btn-add" onclick="addRow('debts')">+ Add debt</button>
+    <div><button class="btn-calc" onclick="calc()">Show my net worth →</button></div>
+    <div class="privacy">🔒 Runs entirely in your browser. Nothing is saved or sent anywhere.</div>
+  </div>
+
+  <div class="card results" id="results">
+    <div class="nw"><div>YOUR NET WORTH</div><div class="big" id="rNW"></div><div id="rNote" style="color:#cbd8c7"></div></div>
+    <div class="grid">
+      <div class="tile"><div class="lab">Total assets</div><div class="big" style="color:var(--sage)" id="rA"></div></div>
+      <div class="tile"><div class="lab">Total debts</div><div class="big" style="color:var(--gold)" id="rD"></div></div>
+    </div>
+    <div class="bar"><div class="a" id="barA"></div><div class="d" id="barD"></div></div>
+    <div class="legend">■ green = assets &nbsp; ■ gold = debts</div>
+  </div>
+
+  <div class="cta">
+    <h2 style="color:#fff">Your net worth only gets interesting when you watch it move.</h2>
+    <p style="color:#cbd8c7;max-width:560px;margin:8px auto 0">The TidyMoney Net Worth Tracker turns this two-minute snapshot into a monthly habit: fill one column a month and get a live dashboard, assets vs. debts charts, and milestone tracking. Excel + Google Sheets.</p>
+    <a href="https://www.etsy.com/listing/4542205369" rel="noopener">Get the Net Worth Tracker — 35% off on Etsy</a>
+    <a class="alt" href="https://ackley57.gumroad.com/l/net-worth-tracker" rel="noopener">Or $10 on Gumroad</a>
+  </div>
+
+  <div class="card faq">
+    <h2>Net worth, in plain English</h2>
+    <h3>What counts as an asset?</h3>
+    <p>Anything you could turn into money: checking and savings, brokerage and retirement accounts, your home's market value, vehicles (be honest — use what it would sell for), and anything else of real resale value.</p>
+    <h3>Is a negative net worth bad?</h3>
+    <p>It's normal early on — student loans plus a car loan can outweigh savings for years. Direction beats position: a net worth climbing from −$20k is healthier than one stalled at +$5k.</p>
+    <h3>How often should I check it?</h3>
+    <p>Monthly. Frequent enough to stay motivated, rare enough that market wobbles don't shake you. Payday works great.</p>
+    <p style="margin-top:10px;font-size:.85rem;color:#8a8f8b">Educational tool, not financial advice.</p>
+  </div>
+</div>
+<footer>© TidyMoney · Spreadsheets that run your money for you · <a href="https://www.etsy.com/shop/TidyMoney" style="color:#7A9E7E">Etsy</a> · <a href="https://ackley57.gumroad.com" style="color:#7A9E7E">Gumroad</a></footer>
+<script>
+function addRow(tb,name,val){
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><input placeholder="${tb==='assets'?'Savings account':'Credit card'}" value="${name||''}"></td>
+  <td><input type="number" min="0" placeholder="${tb==='assets'?'8000':'2400'}" value="${val||''}"></td>
+  <td><button class="del" onclick="this.closest('tr').remove()">✕</button></td>`;
+  document.getElementById(tb).appendChild(tr);
+}
+addRow('assets','Checking','');addRow('assets','Savings','');addRow('assets','Retirement (401k/IRA)','');addRow('assets','Car (resale value)','');
+addRow('debts','Credit card','');addRow('debts','Student loan','');addRow('debts','Auto loan','');
+function fmt$(x){const s='$'+Math.abs(x).toLocaleString(undefined,{maximumFractionDigits:0});return x<0?'−'+s:s}
+function total(tb){return [...document.querySelectorAll('#'+tb+' tr')].reduce((s,tr)=>{const v=parseFloat(tr.querySelectorAll('input')[1].value);return s+(v>0?v:0)},0)}
+function calc(){
+  const a=total('assets'),d=total('debts'),nw=a-d;
+  document.getElementById('results').style.display='block';
+  rNW.textContent=fmt$(nw);
+  rA.textContent=fmt$(a);rD.textContent=fmt$(d);
+  rNote.textContent=nw>=0?'Assets minus debts — the number to grow.':'Negative for now — direction matters more than position.';
+  const t=a+d;barA.style.width=(t?100*a/t:50)+'%';barD.style.width=(t?100*d/t:50)+'%';
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
+
