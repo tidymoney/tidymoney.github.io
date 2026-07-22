@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Savings Goal Calculator — When Will I Reach My Goal? | TidyMoney</title>
+<meta name="description" content="Free savings goal calculator. Enter your goal, what you've saved, and your monthly contribution — see the exact month you'll hit it, with interest included. No signup.">
+<meta property="og:title" content="Free Savings Goal Calculator — see your goal date">
+<meta property="og:description" content="Enter goal, savings, and monthly amount. See the month you'll get there — free, instant, no signup.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://tidymoney.github.io/savings-goal-calculator.html">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How long will it take to reach my savings goal?","acceptedAnswer":{"@type":"Answer","text":"Divide the gap by your monthly contribution as a rough guess, but interest shortens the wait. This calculator compounds your balance monthly (APY divided by 12) and adds your contribution each month, then reports the exact month you cross your goal."}},
+{"@type":"Question","name":"Does interest really matter for short-term savings?","acceptedAnswer":{"@type":"Answer","text":"For goals under a year, interest helps a little. For multi-year goals in a high-yield account, it can knock months off the timeline — the calculator shows exactly how much of your final balance is interest."}},
+{"@type":"Question","name":"What monthly savings amount should I pick?","acceptedAnswer":{"@type":"Answer","text":"Work backward from your budget, not your wishes: after bills and essentials, pick a number you can hit every single month. A smaller amount you never skip beats a big one you abandon."}}]}
+</script>
+<style>
+:root{--dark:#3D5A45;--sage:#7A9E7E;--light:#E7EFE7;--cream:#FAF7F0;--ink:#2F3E33;--gold:#C9A227;--red:#C0392B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--ink);line-height:1.5}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+header{background:var(--dark);color:#fff;padding:28px 16px;text-align:center}
+header .brand{color:#fff;font-weight:bold;letter-spacing:.5px}
+header .brand span{color:var(--gold)}
+h1{font-size:1.7rem;margin-top:10px}
+header p{color:#cbd8c7;margin-top:8px;max-width:640px;margin-left:auto;margin-right:auto}
+.gold-bar{height:6px;background:var(--gold)}
+nav.tools{background:#2f4736;text-align:center;padding:9px 6px;font-size:.9rem}
+nav.tools a{color:#E7EFE7;text-decoration:none;margin:0 10px}
+nav.tools a.here{color:var(--gold);font-weight:bold}
+.card{background:#fff;border:1px solid #d5ddd5;border-radius:12px;padding:18px;margin:18px 0;box-shadow:0 4px 14px rgba(40,55,45,.08)}
+h2{color:var(--dark);font-size:1.15rem;margin-bottom:10px}
+.inrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:8px}
+.inrow label{font-weight:bold;font-size:.85rem;display:block;margin-bottom:4px}
+input{width:100%;padding:9px;border:1px solid #c8d2c8;border-radius:6px;background:#FFF9E3;color:#1F4E9C;font-size:1rem}
+input:focus{outline:2px solid var(--sage)}
+button{cursor:pointer;border:none;border-radius:8px;padding:12px 28px;font-size:1.1rem;font-weight:bold;background:var(--dark);color:#fff;margin-top:14px}
+button:hover{background:#2f4736}
+.results{display:none}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.tile{border:2px solid var(--light);border-radius:12px;padding:14px;text-align:center}
+.tile .big{font-size:1.7rem;font-weight:bold;color:var(--dark);margin:6px 0}
+.tile .lab{color:#6c766c;font-size:.85rem;text-transform:uppercase;letter-spacing:.5px}
+.savings{background:var(--light);border-radius:12px;padding:14px;text-align:center;margin-top:14px}
+.savings b{color:var(--gold);font-size:1.2rem}
+canvas{width:100%;max-width:100%;margin-top:10px}
+.cta{background:var(--dark);color:#fff;border-radius:12px;padding:22px;text-align:center;margin:26px 0}
+.cta a{display:inline-block;background:var(--gold);color:#243b2c;font-weight:bold;padding:12px 22px;border-radius:8px;text-decoration:none;margin:10px 6px 0}
+.cta a.alt{background:#fff}
+.faq h3{color:var(--dark);margin:14px 0 4px}
+footer{color:#8a8f8b;text-align:center;font-size:.85rem;padding:24px 12px}
+.err{color:var(--red);font-weight:bold;display:none;margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Tidy<span>Money</span></div>
+  <h1>Free Savings Goal Calculator</h1>
+  <p>Enter your goal, what you've saved so far, and what you can put away each month. See the exact month you'll get there — with interest doing its quiet part.</p>
+</header>
+<div class="gold-bar"></div>
+<nav class="tools">Free tools: <a href="/">Debt Payoff</a> <a class="here" href="/savings-goal-calculator.html">Savings Goal</a> <a href="/net-worth-calculator.html">Net Worth</a> · Shop: <a href="https://www.etsy.com/shop/TidyMoney" rel="noopener">Etsy</a> <a href="https://ackley57.gumroad.com" rel="noopener">Gumroad</a></nav>
+<div class="wrap">
+  <div class="card">
+    <h2>1 · Your numbers</h2>
+    <div class="inrow">
+      <div><label for="goal">Savings goal ($)</label><input id="goal" type="number" min="1" value="10000"></div>
+      <div><label for="saved">Already saved ($)</label><input id="saved" type="number" min="0" value="1500"></div>
+      <div><label for="monthly">Monthly contribution ($)</label><input id="monthly" type="number" min="0" value="350"></div>
+      <div><label for="apy">Account APY (%)</label><input id="apy" type="number" min="0" step="0.1" value="4.0"></div>
+    </div>
+    <button onclick="calc()">Show my goal date →</button>
+    <div class="err" id="err">Enter a goal above $0 — and either a monthly contribution or some starting savings.</div>
+  </div>
+
+  <div class="card results" id="results">
+    <h2>2 · Your goal date</h2>
+    <div class="grid">
+      <div class="tile"><div class="lab">You'll get there in</div><div class="big" id="rMonths"></div><div class="lab" id="rDate"></div></div>
+      <div class="tile"><div class="lab">Total you'll deposit</div><div class="big" id="rDep"></div><div class="lab">including starting savings</div></div>
+      <div class="tile"><div class="lab">Interest earned</div><div class="big" id="rInt"></div><div class="lab">money you didn't work for</div></div>
+    </div>
+    <div class="savings" id="verdict"></div>
+    <canvas id="chart" height="220"></canvas>
+  </div>
+
+  <div class="cta">
+    <h2 style="color:#fff">Saving is step one. Seeing all your money in one place is the cheat code.</h2>
+    <p style="color:#cbd8c7;max-width:560px;margin:8px auto 0">Our spreadsheets do this automatically: the Ultimate Budget by Paycheck plans every dollar (savings goals included) and the Net Worth Tracker turns monthly balances into the most motivating chart you'll ever own.</p>
+    <a href="https://www.etsy.com/listing/4539351283" rel="noopener">Get the Ultimate Budget — 35% off on Etsy</a>
+    <a class="alt" href="https://ackley57.gumroad.com/l/net-worth-tracker" rel="noopener">Net Worth Tracker — $10 on Gumroad</a>
+  </div>
+
+  <div class="card faq">
+    <h2>Savings goals, in plain English</h2>
+    <h3>How long will it take to reach my goal?</h3>
+    <p>Rough math: gap ÷ monthly amount. Real math: your balance also earns interest every month, which shortens the wait — that's what this calculator computes (monthly compounding, APY ÷ 12, contribution added each month).</p>
+    <h3>Does the APY really matter?</h3>
+    <p>On short goals, a little. On multi-year goals in a high-yield savings account, a lot more than people expect. Run it with 0% and again with your real APY — the difference is free money.</p>
+    <h3>What if I can't save much?</h3>
+    <p>Pick the number you can hit <b>every</b> month, even if it's small. Consistency compounds; heroic one-off deposits don't. And when a windfall shows up, throw it in and watch the date jump closer.</p>
+    <p style="margin-top:10px;font-size:.85rem;color:#8a8f8b">Assumes contributions at the start of each month and monthly compounding (APY ÷ 12). Educational tool, not financial advice.</p>
+  </div>
+</div>
+<footer>© TidyMoney · Spreadsheets that run your money for you · <a href="https://www.etsy.com/shop/TidyMoney" style="color:#7A9E7E">Etsy</a> · <a href="https://ackley57.gumroad.com" style="color:#7A9E7E">Gumroad</a></footer>
+<script>
+function fmt$(x){return '$'+x.toLocaleString(undefined,{maximumFractionDigits:0})}
+function dateIn(m){const d=new Date();d.setMonth(d.getMonth()+m);return d.toLocaleDateString(undefined,{month:'long',year:'numeric'})}
+function simSave(goal,saved,monthly,apy){
+  let b=saved,months=0;const curve=[b];const r=apy/1200;
+  while(b<goal&&months<1200){months++;b=b+monthly;b=Math.round(b*(1+r)*100)/100;curve.push(b)}
+  return {months,final:b,curve};
+}
+function calc(){
+  const goal=parseFloat(document.getElementById('goal').value)||0;
+  const saved=parseFloat(document.getElementById('saved').value)||0;
+  const monthly=parseFloat(document.getElementById('monthly').value)||0;
+  const apy=parseFloat(document.getElementById('apy').value)||0;
+  const err=document.getElementById('err');
+  if(goal<=0||(monthly<=0&&saved<=0)){err.style.display='block';return}
+  err.style.display='none';
+  document.getElementById('results').style.display='block';
+  if(saved>=goal){
+    rMonths.textContent='0 months';rDate.textContent='You are already there 🎉';
+    rDep.textContent=fmt$(saved);rInt.textContent='$0';
+    verdict.innerHTML='Goal reached — pick a bigger one, or point this money at the next thing.';
+    drawChart([saved,saved]);document.getElementById('results').scrollIntoView({behavior:'smooth'});return;
+  }
+  const s=simSave(goal,saved,monthly,apy);
+  if(s.months>=1200){
+    rMonths.textContent='—';rDate.textContent='Not reachable at this rate';
+    rDep.textContent='—';rInt.textContent='—';
+    verdict.innerHTML='At '+fmt$(monthly)+'/month this goal is over 100 years out — raise the monthly amount and run it again.';
+    drawChart(s.curve.slice(0,120));return;
+  }
+  const dep=saved+monthly*s.months;
+  const interest=Math.max(0,Math.round((s.final-dep)*100)/100);
+  rMonths.textContent=s.months+(s.months===1?' month':' months');
+  rDate.textContent='Goal month: '+dateIn(s.months);
+  rDep.textContent=fmt$(dep);
+  rInt.textContent=fmt$(interest);
+  const noInt=simSave(goal,saved,monthly,0);
+  const diff=noInt.months-s.months;
+  verdict.innerHTML=diff>0?('Interest alone gets you there <b>'+diff+' month'+(diff>1?'s':'')+' sooner</b> than saving in a 0% account. Same effort, faster finish.'):('At this timeline interest barely moves the date — your monthly deposit is doing the heavy lifting. Keep it automatic.');
+  drawChart(s.curve,goal);
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+function drawChart(arr,goal){
+  const c=document.getElementById('chart'),ctx=c.getContext('2d');
+  c.width=c.offsetWidth*2;c.height=440;
+  ctx.clearRect(0,0,c.width,c.height);
+  const n=arr.length,max=Math.max(goal||0,arr[n-1])*1.05;
+  const X=i=>40+(c.width-60)*(n>1?i/(n-1):1),Y=v=>20+(c.height-60)*(1-v/max);
+  if(goal){ctx.strokeStyle='#C9A227';ctx.setLineDash([12,8]);ctx.beginPath();ctx.moveTo(40,Y(goal));ctx.lineTo(c.width-20,Y(goal));ctx.stroke();ctx.setLineDash([]);
+    ctx.font='22px Arial';ctx.fillStyle='#C9A227';ctx.fillText('Goal '+fmt$(goal),50,Y(goal)-10);}
+  ctx.strokeStyle='#d5ddd5';ctx.beginPath();ctx.moveTo(40,Y(0));ctx.lineTo(c.width-20,Y(0));ctx.stroke();
+  ctx.strokeStyle='#7A9E7E';ctx.lineWidth=5;ctx.beginPath();
+  arr.forEach((v,i)=>i?ctx.lineTo(X(i),Y(v)):ctx.moveTo(X(i),Y(v)));ctx.stroke();ctx.lineWidth=1;
+}
+</script>
+</body>
+</html>
+
