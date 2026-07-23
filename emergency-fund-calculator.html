@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Emergency Fund Calculator — How Much Do I Need? | TidyMoney</title>
+<meta name="description" content="Free emergency fund calculator. Enter your monthly essentials and see your 3-month and 6-month targets, how far along you are, and the month you'll be covered. No signup.">
+<meta property="og:title" content="Free Emergency Fund Calculator — know your number">
+<meta property="og:description" content="Your 3- and 6-month targets, your progress, and your fully-funded date. Free, instant, no signup.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://tidymoney.github.io/emergency-fund-calculator.html">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How much should my emergency fund be?","acceptedAnswer":{"@type":"Answer","text":"The common guideline is 3 to 6 months of essential expenses — rent or mortgage, utilities, food, insurance, minimum debt payments. Three months if your income is steady, six or more if it's variable or one income covers a household."}},
+{"@type":"Question","name":"Where should I keep my emergency fund?","acceptedAnswer":{"@type":"Answer","text":"Somewhere safe and reachable in a day or two — typically a high-yield savings account. It should earn interest, but the point is availability, not returns."}},
+{"@type":"Question","name":"What counts as essential expenses?","acceptedAnswer":{"@type":"Answer","text":"What you'd still have to pay if your income stopped tomorrow: housing, utilities, groceries, insurance, transportation, and minimum debt payments. Subscriptions and dining out don't count — you'd cut those."}}]}
+</script>
+<style>
+:root{--dark:#3D5A45;--sage:#7A9E7E;--light:#E7EFE7;--cream:#FAF7F0;--ink:#2F3E33;--gold:#C9A227;--red:#C0392B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--ink);line-height:1.5}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+header{background:var(--dark);color:#fff;padding:28px 16px;text-align:center}
+header .brand{color:#fff;font-weight:bold;letter-spacing:.5px}
+header .brand span{color:var(--gold)}
+h1{font-size:1.7rem;margin-top:10px}
+header p{color:#cbd8c7;margin-top:8px;max-width:640px;margin-left:auto;margin-right:auto}
+.gold-bar{height:6px;background:var(--gold)}
+nav.tools{background:#2f4736;text-align:center;padding:9px 6px;font-size:.9rem}
+nav.tools a{color:#E7EFE7;text-decoration:none;margin:0 8px}
+nav.tools a.here{color:var(--gold);font-weight:bold}
+.card{background:#fff;border:1px solid #d5ddd5;border-radius:12px;padding:18px;margin:18px 0;box-shadow:0 4px 14px rgba(40,55,45,.08)}
+h2{color:var(--dark);font-size:1.15rem;margin-bottom:10px}
+.inrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:8px}
+.inrow label{font-weight:bold;font-size:.85rem;display:block;margin-bottom:4px}
+input{width:100%;padding:9px;border:1px solid #c8d2c8;border-radius:6px;background:#FFF9E3;color:#1F4E9C;font-size:1rem}
+input:focus{outline:2px solid var(--sage)}
+button{cursor:pointer;border:none;border-radius:8px;padding:12px 28px;font-size:1.1rem;font-weight:bold;background:var(--dark);color:#fff;margin-top:14px}
+button:hover{background:#2f4736}
+.results{display:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.tile{border:2px solid var(--light);border-radius:12px;padding:14px;text-align:center}
+.tile.hot{border-color:var(--gold);background:#FFFDF4}
+.tile .big{font-size:1.8rem;font-weight:bold;color:var(--dark);margin:6px 0}
+.tile .lab{color:#6c766c;font-size:.85rem;text-transform:uppercase;letter-spacing:.5px}
+.meter{height:30px;border-radius:8px;background:var(--light);overflow:hidden;margin-top:16px}
+.meter .fill{height:100%;background:var(--sage);width:0%;transition:width .6s}
+.meterlab{text-align:center;font-size:.9rem;color:#6c766c;margin-top:6px}
+.savings{background:var(--light);border-radius:12px;padding:14px;text-align:center;margin-top:14px}
+.savings b{color:var(--gold);font-size:1.2rem}
+.cta{background:var(--dark);color:#fff;border-radius:12px;padding:22px;text-align:center;margin:26px 0}
+.cta a{display:inline-block;background:var(--gold);color:#243b2c;font-weight:bold;padding:12px 22px;border-radius:8px;text-decoration:none;margin:10px 6px 0}
+.cta a.alt{background:#fff}
+.faq h3{color:var(--dark);margin:14px 0 4px}
+footer{color:#8a8f8b;text-align:center;font-size:.85rem;padding:24px 12px}
+.err{color:var(--red);font-weight:bold;display:none;margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Tidy<span>Money</span></div>
+  <h1>Free Emergency Fund Calculator</h1>
+  <p>How much cushion do you actually need — and when will you have it? Enter three numbers and find out. Free, instant, nothing to sign up for.</p>
+</header>
+<div class="gold-bar"></div>
+<nav class="tools">Free tools: <a href="/">Debt Payoff</a> <a href="/savings-goal-calculator.html">Savings Goal</a> <a href="/net-worth-calculator.html">Net Worth</a> <a class="here" href="/emergency-fund-calculator.html">Emergency Fund</a> · Shop: <a href="https://www.etsy.com/shop/TidyMoney" rel="noopener">Etsy</a> <a href="https://ackley57.gumroad.com" rel="noopener">Gumroad</a></nav>
+<div class="wrap">
+  <div class="card">
+    <h2>1 · Your numbers</h2>
+    <div class="inrow">
+      <div><label for="exp">Essential expenses per month ($)</label><input id="exp" type="number" min="1" value="2800"></div>
+      <div><label for="saved">Saved for emergencies so far ($)</label><input id="saved" type="number" min="0" value="1200"></div>
+      <div><label for="monthly">You can add monthly ($)</label><input id="monthly" type="number" min="0" value="300"></div>
+      <div><label for="apy">Savings APY (%)</label><input id="apy" type="number" min="0" step="0.1" value="4.0"></div>
+    </div>
+    <button onclick="calc()">Show my safety number →</button>
+    <div class="err" id="err">Enter your monthly essential expenses (above $0).</div>
+  </div>
+
+  <div class="card results" id="results">
+    <h2>2 · Your targets</h2>
+    <div class="grid">
+      <div class="tile"><div class="lab">3-month fund (baseline)</div><div class="big" id="r3"></div><div class="lab" id="d3"></div></div>
+      <div class="tile hot"><div class="lab">6-month fund (gold standard)</div><div class="big" id="r6"></div><div class="lab" id="d6"></div></div>
+    </div>
+    <div class="meter"><div class="fill" id="fill"></div></div>
+    <div class="meterlab" id="mlab"></div>
+    <div class="savings" id="verdict"></div>
+  </div>
+
+  <div class="cta">
+    <h2 style="color:#fff">An emergency fund is a number. Keeping it funded is a habit.</h2>
+    <p style="color:#cbd8c7;max-width:560px;margin:8px auto 0">The Ultimate Budget by Paycheck gives your emergency fund a named savings goal, tracks every deposit, and shows the whole picture on one dashboard — so the cushion actually gets built.</p>
+    <a href="https://www.etsy.com/listing/4539351283" rel="noopener">Get the Ultimate Budget — 35% off on Etsy</a>
+    <a class="alt" href="/savings-goal-calculator.html">Try the free Savings Goal calculator</a>
+  </div>
+
+  <div class="card faq">
+    <h2>Emergency funds, in plain English</h2>
+    <h3>How much should my emergency fund be?</h3>
+    <p>The standard guideline: <b>3–6 months of essential expenses</b>. Three months if your income is steady and you could find work fast; six or more if income is variable, you're self-employed, or one paycheck covers the household.</p>
+    <h3>What counts as "essential"?</h3>
+    <p>What you'd still pay if income stopped tomorrow: housing, utilities, groceries, insurance, transportation, minimum debt payments. Streaming and takeout don't count — in a real emergency, you'd cut them.</p>
+    <h3>Where should I keep it?</h3>
+    <p>A high-yield savings account is typical: reachable in a day or two and earning interest, but separate enough that you won't spend it by accident. The point is availability, not returns.</p>
+    <p style="margin-top:10px;font-size:.85rem;color:#8a8f8b">Assumes contributions at the start of each month and monthly compounding (APY ÷ 12). Educational tool, not financial advice.</p>
+  </div>
+</div>
+<footer>© TidyMoney · Spreadsheets that run your money for you · <a href="https://www.etsy.com/shop/TidyMoney" style="color:#7A9E7E">Etsy</a> · <a href="https://ackley57.gumroad.com" style="color:#7A9E7E">Gumroad</a></footer>
+<script>
+function fmt$(x){return '$'+x.toLocaleString(undefined,{maximumFractionDigits:0})}
+function dateIn(m){const d=new Date();d.setMonth(d.getMonth()+m);return d.toLocaleDateString(undefined,{month:'long',year:'numeric'})}
+function monthsTo(goal,saved,monthly,apy){let b=saved,m=0;const r=apy/1200;while(b<goal&&m<1200){m++;b=b+monthly;b=Math.round(b*(1+r)*100)/100}return m}
+function calc(){
+  const exp=parseFloat(document.getElementById('exp').value)||0;
+  const saved=parseFloat(document.getElementById('saved').value)||0;
+  const monthly=parseFloat(document.getElementById('monthly').value)||0;
+  const apy=parseFloat(document.getElementById('apy').value)||0;
+  const err=document.getElementById('err');
+  if(exp<=0){err.style.display='block';return}
+  err.style.display='none';
+  document.getElementById('results').style.display='block';
+  const t3=exp*3,t6=exp*6;
+  r3.textContent=fmt$(t3); r6.textContent=fmt$(t6);
+  const m3=saved>=t3?0:(monthly>0?monthsTo(t3,saved,monthly,apy):-1);
+  const m6=saved>=t6?0:(monthly>0?monthsTo(t6,saved,monthly,apy):-1);
+  d3.textContent=m3===0?'Funded ✓':(m3>0&&m3<1200?'Funded by '+dateIn(m3):'Add a monthly amount');
+  d6.textContent=m6===0?'Funded ✓':(m6>0&&m6<1200?'Funded by '+dateIn(m6):'Add a monthly amount');
+  const pct=Math.min(100,Math.round(100*saved/t6));
+  fill.style.width=pct+'%';
+  mlab.textContent='You have '+fmt$(saved)+' — '+pct+'% of the 6-month fund';
+  const covered=Math.floor(saved/exp*10)/10;
+  verdict.innerHTML='Right now you could cover <b>'+covered+' month'+(covered===1?'':'s')+'</b> of essentials. '+(saved>=t6?'You are past the gold standard — anything extra can go to debt or investing.':(saved>=t3?'Baseline reached — the 6-month mark is in sight.':'Every deposit buys you calm. Automate it and let the meter climb.'));
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
+
